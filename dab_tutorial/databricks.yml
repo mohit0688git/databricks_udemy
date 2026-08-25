@@ -1,0 +1,35 @@
+bundle:
+  name: dab_tutorial
+  uuid: b3204c15-8bf0-448b-85e6-fded3ec48970
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: dbc-8364a065-993c.cloud.databricks.com
+
+    permissions:
+      - group_name: admins
+        level: CAN_MANAGE
+    
+    presets:
+      name_prefix: ${workspace.current_user.short_name}
+      source_linked_deployment: false
+    
+  prod:
+    mode: production
+    workspace:
+      host: dbc-8364a065-993c.cloud.databricks.com
+      root_path: /Workspace/PROD/.bundle/${bundle.name}/${bundle.target}
+    
+    permissions:
+      - user_name: mohit.databricks0688@gmail.com
+        level: CAN_MANAGE
+      - group_name: admins
+        level: CAN_RUN
